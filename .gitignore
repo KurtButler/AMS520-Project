@@ -1,7 +1,10 @@
-
+# Ignore any data files
 *.zip
-*.txt
-Data/Asset Management projects data/bond.data.csv
-Data/Asset Management projects data/natgas.data.csv
-Data/BofA projects data/EOD/EOD_20210908.csv
-Data/BofA projects data/EOD_metadata.csv/EOD_metadata.csv
+Data/*
+
+# Ignore Matlab autosave files
+*.asv
+
+# Ignore dataset files
+*.mat
+*.csv
