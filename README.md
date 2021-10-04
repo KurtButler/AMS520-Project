@@ -1,5 +1,4 @@
-# AMS520-Project
-Class project for Machine Learning in Quantitative Finance.
+# Forecasting of Time Series in Quantitative Wealth and Investment Management
 
 **Abstract.** The objective of this project is to study forecasting methodolgies for financial applications. The project is intended to compare and contrast classical methodologies from statistics and dynamical systems with machine learning (ML) based methods. 
 
