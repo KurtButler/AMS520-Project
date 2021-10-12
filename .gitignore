@@ -8,3 +8,5 @@ Data/*
 # Ignore dataset files
 *.mat
 *.csv
+
+.DS_Store
