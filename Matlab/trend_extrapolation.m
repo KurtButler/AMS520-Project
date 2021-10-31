@@ -32,10 +32,14 @@ datadetrended = data - datatrend;
 % Trend predictions
 trendp = zeros(size(datatrend,1),1);
 for n = 11:size(trendp,1)
-    segment = datatrend(n-10:n-1,end);
-    H = ((1:numel(segment))').^(0:4);
-    b = pinv(H)*segment;
-    trendp(n) =  ((numel(segment)+1).^(0:4))*b;
+    segment = datatrend(n-4:n-1,end);
+%     H = ((1:numel(segment))').^(0:1);
+%     b = pinv(H)*segment;
+%     yp = ((numel(segment)+1).^(0:1))*b;
+%     gp = fitrgp((1:numel(segment))',segment,'BasisFunction','linear');
+%     yp = predict(gp,numel(segment)+1);
+    func = fit( (1:numel(segment))', segment, 'lowess');
+    trendp(n) =  yp;
 end
 
 

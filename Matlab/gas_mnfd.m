@@ -52,3 +52,23 @@ M = embed(x,3,tau);
 plot3(M(:,1), M(:,2), M(:,3));
 grid on;
 title(sprintf('Phase portait\ntau=%d, Q=%d',tau,Q))
+
+
+% Let's predict
+MT = embed(x,Q+1,tau);
+M = MT(:,1:end-1);
+T = MT(:,end);
+gp = fitrgp(M,T);
+Tp = resubPredict(gp);
+
+figure
+plot(T,'LineWidth',2)
+hold on
+plot(Tp,'LineWidth',2)
+grid on
+
+
+figure
+plot(resubPredict(fitrgp((1:numel(x))', x)));
+hold on
+plot(x)

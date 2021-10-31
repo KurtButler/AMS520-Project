@@ -10,24 +10,24 @@ if ~exist('data','var')
     end
     addpath C:\Users\kurtb\Documents\MATLAB\topology
     import_gas;
+end
     % Select some features
     % For now I'm gonna use the easy stuff
     data = [natgas.STOCKS,natgas.JFKTEMP, natgas.CLTTEMP, natgas.ORDTEMP, natgas.HOUTEMP, natgas.LAXTEMP, natgas.NXT_CNG_STK];
     weeks = (1:size(data,1))';
-end
 
 % Normalize
 data = normalize(data);
 
 % Detrending
-datatrend = sgolayfilt( data, 3, 9);
+datatrend = sgolayfilt( data, 3, 11);
 datadetrended = data - datatrend;
 
 % Trend predictions
 trendp = zeros(size(datatrend,1),1);
 for n = 11:size(trendp,1)
     segment = [ datatrend(n-10:n-1,end); 0];
-    segment(end) = segment(end-1);
+    segment(end) = segment(end-1) + (segment(end-1)-segment(end-2));
     segment = sgolayfilt( segment, 3, 11);
     trendp(n) =  segment(end);
 end
