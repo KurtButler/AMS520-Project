@@ -24,7 +24,7 @@ opts.EmptyLineRule = "read";
 opts = setvaropts(opts, ["HDD_FORE", "CDD_FORE"], "EmptyFieldRule", "auto");
 
 % Import the data
-natgas = readtable("C:\Users\kurtb\Documents\MATLAB\AMS520-Project\Data\natgas.data.csv", opts);
+natgas = readtable("natgas.data.csv", opts);
 
 
 %% Clear temporary variables

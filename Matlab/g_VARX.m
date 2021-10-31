@@ -2,19 +2,24 @@
 close all;
 
 if ~exist('data','var')
-addpath(genpath('C:\Users\kurtb\Documents\MATLAB\AMS520-Project\Matlab'))
-addpath C:\Users\kurtb\Documents\MATLAB\topology
-import_gas;
-% Select some features
-% For now I'm gonna use the easy stuff
-data = [natgas.STOCKS,natgas.JFKTEMP, natgas.CLTTEMP, natgas.ORDTEMP, natgas.HOUTEMP, natgas.LAXTEMP, natgas.NXT_CNG_STK];
-weeks = (1:size(data,1))';
+    if exist('C:\Users\kurtb\Documents\MATLAB\AMS520-Project\Matlab','dir')
+        addpath(genpath('C:\Users\kurtb\Documents\MATLAB\AMS520-Project\Matlab'))
+    end
+    if exist('/Users/kbutler/Documents/MATLAB/AMS Project','dir')
+        addpath(genpath('/Users/kbutler/Documents/MATLAB/AMS Project'))
+    end
+    addpath C:\Users\kurtb\Documents\MATLAB\topology
+    import_gas;
+    % Select some features
+    % For now I'm gonna use the easy stuff
+    data = [natgas.STOCKS,natgas.JFKTEMP, natgas.CLTTEMP, natgas.ORDTEMP, natgas.HOUTEMP, natgas.LAXTEMP, natgas.NXT_CNG_STK];
+    weeks = (1:size(data,1))';
 end
 
 % Normalize
 data = normalize(data);
 
-% Detrending 
+% Detrending
 datatrend = sgolayfilt( data, 3, 9);
 datadetrended = data - datatrend;
 
