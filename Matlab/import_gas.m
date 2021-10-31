@@ -14,7 +14,7 @@ opts.Delimiter = ",";
 
 % Specify column names and types
 opts.VariableNames = ["VarName1", "STOCKS", "HDD_FORE", "CDD_FORE", "JFKTEMP", "CLTTEMP", "ORDTEMP", "HOUTEMP", "LAXTEMP", "NXT_CNG_STK"];
-opts.VariableTypes = ["double", "double", "categorical", "categorical", "double", "double", "double", "double", "double", "double"];
+opts.VariableTypes = ["double", "double", "double", "double", "double", "double", "double", "double", "double", "double"];
 
 % Specify file level properties
 opts.ExtraColumnsRule = "ignore";
