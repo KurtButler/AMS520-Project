@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+# Ignore any dataset files
+*.zip
+Data/*
+*.mat
+*.csv
+
+# Ignore Matlab autosave files
+*.asv
+
+.DS_Store
