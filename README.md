@@ -6,7 +6,7 @@ The objective of this project is to study forecasting methodolgies for financial
 ### Jupyter Notebooks
 | Model | Natural gas data set | Bond dataset |
 | ------------- | ------------- | ---- |
-| Data Overview  | Link  | | 
+| Data Overview  | [Data Overview - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Data%20Overview%20-%20Gas.ipynb)  | | 
 | Linear Models |   | |
 | NARX (Feedforward NN) |   | |
 | Recurrent Neural Networks |   | |
