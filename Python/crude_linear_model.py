@@ -12,9 +12,9 @@ features=my_data[:,4:9]
 target = my_data[:,9]
 
 
-#plt.plot(my_data[:,4:9])
-#plt.title('Raw features')
-#plt.show()
+plt.plot(my_data[:,4:9])
+plt.title('Raw features')
+plt.show()
 
 # Deseasonalization using Savitzky-Golay (LOESS)
 # Code from Stack Overflow
@@ -31,7 +31,7 @@ def butter_lowpass_filtfilt(data, cutoff, fs, order=5):
     return y
 
 
-cutoff = 4
+cutoff = 13
 fs = 52
 trend = butter_lowpass_filtfilt(target, cutoff, fs)
 for k in range(0,features.shape[1]):
@@ -39,6 +39,13 @@ for k in range(0,features.shape[1]):
 
 # Plot the detrended version
 target = target - trend
+
+# ARMA
+X = np.concatenate( (features[1:834,:], features[0:833,:]), axis=1 ) 
+target.shape = (target.shape[0],1)
+X = np.concatenate((X, target[0:833]),axis=1)
+y = target[1:834]
+
 
 plt.plot(target)
 plt.title("Detrended signal") 
@@ -51,11 +58,11 @@ plt.show()
 
 
 # Fit a crude linear model  target = features @ A
-linmdl = np.linalg.lstsq(features, target, rcond=None)
-targetpred = features @ linmdl[0] 
+linmdl = np.linalg.lstsq(X, y, rcond=None)
+targetpred = X @ linmdl[0] 
 
-plt.figure(figsize=(18, 8))
+plt.figure(figsize=(2, 6))
 plt.plot(target)
 plt.plot(targetpred)
-plt.title("Signal vs LM of other features") 
+plt.title("Signal vs ARMA(1,2) (detrended)") 
 plt.show()
