@@ -1,12 +1,14 @@
 # Ignore any data files
 *.zip
 Data/*
+*.mat
+*.csv
+
+# Ignore PyCharm
+.idea/*
 
 # Ignore Matlab autosave files
 *.asv
 
-# Ignore dataset files
-*.mat
-*.csv
 
 .DS_Store
