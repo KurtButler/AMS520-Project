@@ -7,7 +7,7 @@ The objective of this project is to study forecasting methodolgies for financial
 | Model | Natural gas data set | Bond dataset |
 | ------------- | ------------- | ---- |
 | Data Overview  | [Data Overview - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Data%20Overview%20-%20Gas.ipynb)  | | 
-| Linear Models |   | |
+| Linear Models | [Linear Models - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Linear%20Models%20-%20Gas.ipynb)   | |
 | NARX (Feedforward NN) |   | |
 | Recurrent Neural Networks |   | |
 | Comparison of models and data fusion |   | |
