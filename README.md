@@ -17,3 +17,4 @@ The objective of this project is to study forecasting methodolgies for financial
 * *M4 Forecasting Competition: Introducing a New Hybrid ES-RNN Model* by Slawek Smyl et. al. (https://eng.uber.com/m4-forecasting-competition/)
 * De Gooijer, Jan G., and Rob J. Hyndman. "25 years of time series forecasting." *International Journal of Forecasting* 22, no. 3 (2006): 443-473.
 * R. W. Schafer, "What Is a Savitzky-Golay Filter?" in *IEEE Signal Processing Magazine*, vol. 28, no. 4, pp. 111-117, July 2011, doi: 10.1109/MSP.2011.941097.
+* Wei, Ching-Zong. "On predictive least squares principles." The Annals of Statistics 20, no. 1 (1992): 1-42.
