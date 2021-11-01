@@ -4,7 +4,7 @@
 The objective of this project is to study forecasting methodolgies for financial applications. The project is intended to compare and contrast classical methodologies from classical statistics and signal processing with machine learning (ML) based methods. The content of this project is organized in a series of Jupyter notebooks for each model type.
 
 ### Jupyter Notebooks
-| Model | Natural gas data set | Bond dataset |
+| Model | Natural gas dataset | Bond dataset |
 | ------------- | ------------- | ---- |
 | Data Overview  | [Data Overview - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Data%20Overview%20-%20Gas.ipynb)  | | 
 | Linear Models | [Linear Models - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Linear%20Models%20-%20Gas.ipynb)   | |
