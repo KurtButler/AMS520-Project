@@ -18,4 +18,4 @@ The objective of this project is to study forecasting methodolgies for financial
 * De Gooijer, Jan G., and Rob J. Hyndman. "25 years of time series forecasting." *International Journal of Forecasting* 22, no. 3 (2006): 443-473.
 * Schafer, Ronald W. "What Is a Savitzky-Golay Filter?" in *IEEE Signal Processing Magazine*, vol. 28, no. 4, pp. 111-117, July 2011, doi: 10.1109/MSP.2011.941097.
 * Wei, Ching-Zong. "On predictive least squares principles." The Annals of Statistics 20, no. 1 (1992): 1-42.
-* Brunton, Steven L., and J. Nathan Kutz. *Data-driven science and engineering: Machine learning, dynamical systems, and control.* Cambridge University Press, 2019.
+* Brunton, Steven L., and J. Nathan Kutz. *Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control.* Cambridge University Press, 2019.
