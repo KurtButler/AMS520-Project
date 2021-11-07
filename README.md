@@ -15,8 +15,12 @@ The objective of this project is to study forecasting methodolgies for financial
 
 ### References
 * Dixon, Matthew F., Igor Halperin, and Paul Bilokon. *Machine Learning in Finance.* Springer International Publishing, 2020.
-* *M4 Forecasting Competition: Introducing a New Hybrid ES-RNN Model* by Slawek Smyl et. al. (https://eng.uber.com/m4-forecasting-competition/)
+* Petropoulos, Fotios, Daniele Apiletti, Vassilios Assimakopoulos, Mohamed Zied Babai, Devon K. Barrow, Souhaib Ben Taieb, Christoph Bergmeir et al. "Forecasting: theory and practice." arXiv preprint [arXiv:2012.03854](https://arxiv.org/abs/2012.03854) (2020).
+* Hyndman, Rob J., and George Athanasopoulos. Forecasting: principles and practice. OTexts, 2018.(https://otexts.com/fpp3/)
+* Baltas, Nick, and Dimitrios Karyampas. "Forecasting the equity risk premium: The importance of regime-dependent evaluation." Journal of Financial Markets 38 (2018): 83-102. (https://www.sciencedirect.com/science/article/pii/S1386418116303202)
 * De Gooijer, Jan G., and Rob J. Hyndman. "25 years of time series forecasting." *International Journal of Forecasting* 22, no. 3 (2006): 443-473.
 * Schafer, Ronald W. "What Is a Savitzky-Golay Filter?" in *IEEE Signal Processing Magazine*, vol. 28, no. 4, pp. 111-117, July 2011, doi: 10.1109/MSP.2011.941097.
 * Wei, Ching-Zong. "On predictive least squares principles." The Annals of Statistics 20, no. 1 (1992): 1-42.
 * Brunton, Steven L., and J. Nathan Kutz. *Data-Driven Science and Engineering: Machine Learning, Dynamical Systems, and Control.* Cambridge University Press, 2019.
+* *General Interface for Multiple Seasonality Regression Models (TBATS, STLM)* by Matt Dancho. (https://business-science.github.io/modeltime/reference/seasonal_reg.html)
+* *M4 Forecasting Competition: Introducing a New Hybrid ES-RNN Model* by Slawek Smyl et. al. (https://eng.uber.com/m4-forecasting-competition/)
