@@ -23,9 +23,12 @@ from sklearn import svm
 from scipy.signal import savgol_filter
 import seaborn as sns
 import pandas as pd
-from sklearn.datasets import make_friedman2
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF, WhiteKernel, DotProduct, ConstantKernel
+#from sklearn.gaussian_process import GaussianProcessRegressor
+#from sklearn.gaussian_process.kernels import RBF, WhiteKernel, DotProduct, ConstantKernel
+
+# GPyTorch stuff
+import torch
+import gpytorch
 
 
 # Import my own modules
