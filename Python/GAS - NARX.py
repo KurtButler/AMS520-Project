@@ -3,7 +3,7 @@
 
 
 # Configuration
-Ntt = 200 # Test-train split
+Ntt = 300 # Test-train split
 enable_detrend = False 
 enable_normalize=True
 Q = 4 # Order of ARX Model
@@ -105,7 +105,7 @@ OLSmdl = np.linalg.lstsq(Z, y, rcond=None)
 Yp[:,0] = Z @ OLSmdl[0] 
 
 # Fit a LASSO model
-LASSOmdl = linear_model.Lasso(alpha=0.5)
+LASSOmdl = linear_model.Lasso(alpha=0.001)
 LASSOmdl.fit(Z, y)
 Yp[:,1] = Z @ LASSOmdl.coef_
 
@@ -117,11 +117,75 @@ Yp[:,2] = Z @ ridgemdl.coef_
 
 
 
-# Fit a GPR model to NARX
-kernel =  RBF(7) + WhiteKernel(0.01) 
-gpr = GaussianProcessRegressor(kernel=kernel).fit(Z, y)
-Yp[:,3] = gpr.predict(Z)
+# Fit a GPR model to data
+#kernel =  RBF(7) + WhiteKernel(0.01) 
+#gpr = GaussianProcessRegressor(kernel=kernel).fit(Z, y)
+#Yp[:,3] = gpr.predict(Z)
 
+
+
+
+# <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
+
+# Fit a GPyTorch model to data
+# Torchify my data
+yt = torch.Tensor(y)
+Zt = torch.Tensor(Z)
+Zt2 = torch.Tensor(Z2)
+
+
+
+# We will use the simplest form of GP model, exact inference
+class ExactGPModel(gpytorch.models.ExactGP):
+    def __init__(self, train_x, train_y, likelihood):
+        super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
+        self.mean_module = gpytorch.means.ConstantMean()
+        self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
+
+    def forward(self, x):
+        mean_x = self.mean_module(x)
+        covar_x = self.covar_module(x)
+        return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
+
+# initialize likelihood and model
+likelihood = gpytorch.likelihoods.GaussianLikelihood()
+torchmodel = ExactGPModel(Zt, yt, likelihood)
+
+# Find optimal model hyperparameters
+torchmodel.train()
+likelihood.train()
+
+
+# Use the adam optimizer
+optimizer = torch.optim.Adam(torchmodel.parameters(), lr=0.1)  # Includes GaussianLikelihood parameters
+
+# "Loss" for GPs - the marginal log likelihood
+mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, torchmodel)
+
+training_iter = 50
+for i in range(training_iter):
+    # Zero gradients from previous iteration
+    optimizer.zero_grad()
+    # Output from model
+    output = torchmodel(Zt)
+    # Calc loss and backprop gradients
+    loss = -mll(output, yt)
+    loss.backward()
+    print('Iter %d/%d - Loss: %.3f   lengthscale: %.3f   noise: %.3f' % (
+        i + 1, training_iter, loss.item(),
+        torchmodel.covar_module.base_kernel.lengthscale.item(),
+        torchmodel.likelihood.noise.item()
+    ))
+    optimizer.step()
+    
+    
+# Get into evaluation (predictive posterior) mode
+torchmodel.eval()
+likelihood.eval()
+
+Yp[:,3] = torchmodel(Zt).mean.detach()
+
+# <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 
 
 
@@ -165,7 +229,8 @@ Yp = np.empty((y2.shape[0],NoModels))
 Yp[:,0] = Z2 @ OLSmdl[0]      # OLS   ARX
 Yp[:,1] = Z2 @ LASSOmdl.coef_ # LASSO ARX
 Yp[:,2] = Z2 @ ridgemdl.coef_ # Ridge ARX
-Yp[:,3] = gpr.predict(Z2)     # GP    NARX
+#Yp[:,3] = gpr.predict(Z2)     # GP    NARX
+Yp[:,3] = torchmodel(Zt2).mean.detach()    # GP    NARX
 
 
 # Plot Predictions
