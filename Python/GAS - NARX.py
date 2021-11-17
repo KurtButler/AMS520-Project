@@ -23,6 +23,7 @@ from sklearn import svm
 from scipy.signal import savgol_filter
 import seaborn as sns
 import pandas as pd
+from statsmodels.tsa.holtwinters import SimpleExpSmoothing
 #from sklearn.gaussian_process import GaussianProcessRegressor
 #from sklearn.gaussian_process.kernels import RBF, WhiteKernel, DotProduct, ConstantKernel
 
@@ -91,8 +92,10 @@ Z2 = Z2[:,0:Z2.shape[1]-1]
 
 
 # Initialize matrix of predictions
-NoModels = 4 # No. of models that I will have
+NoModels = 5 # No. of models that I will have
 Yp = 0*np.empty((y.shape[0],NoModels))
+modelnames = ['OLS','LASSO','Ridge','GP-NARX','ES']
+omodelnames = ['Observations','OLS','LASSO','Ridge','GP-NARX','ES']
 
 
 
@@ -188,6 +191,12 @@ Yp[:,3] = torchmodel(Zt).mean.detach()
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 
 
+# Simple Exponential Smoothing
+ESmodel = SimpleExpSmoothing(y)
+Yp[:,4] = ESmodel.fit(smoothing_level=0.5).fittedvalues
+
+
+
 
 
 # Plot model fit
@@ -195,7 +204,7 @@ t = np.transpose(np.arange(0,y.shape[0]))
 plt.figure(figsize=(16, 3))
 plt.plot(t,y,'k-')
 plt.plot(t,Yp)
-plt.legend(['Observations','OLS','LASSO','Ridge','GP-NARX'], loc='lower right')
+plt.legend(omodelnames, loc='lower right')
 plt.title('NARX Models in-sample')
 plt.grid(True)
 plt.show()
@@ -210,7 +219,7 @@ for k in range(0,Yp.shape[1]):
 plt.figure(figsize=(16, 3))
 ax = plt.axes()
 plt.plot(t,Ype)
-plt.legend(['OLS','LASSO','Ridge','GP-NARX'], loc='lower right')
+plt.legend(modelnames, loc='lower right')
 plt.title('In-sample Cumulative Error')
 plt.grid(True)
 plt.show()
@@ -231,6 +240,8 @@ Yp[:,1] = Z2 @ LASSOmdl.coef_ # LASSO ARX
 Yp[:,2] = Z2 @ ridgemdl.coef_ # Ridge ARX
 #Yp[:,3] = gpr.predict(Z2)     # GP    NARX
 Yp[:,3] = torchmodel(Zt2).mean.detach()    # GP    NARX
+Yp[:,4] = 0*Yp[:,1]    # GP    NARX
+
 
 
 # Plot Predictions
@@ -238,7 +249,7 @@ t2 = np.transpose(np.arange(0,y2.shape[0]))
 plt.figure(figsize=(16, 3))
 plt.plot(t2,y2,'k-')
 plt.plot(t2,Yp)
-plt.legend(['Observations','OLS','LASSO','Ridge','GP-NARX'], loc='lower right')
+plt.legend(omodelnames, loc='lower right')
 plt.title('ARX Models out-of-sample')
 plt.grid(True)
 plt.show()
@@ -253,7 +264,7 @@ for k in range(0,Yp.shape[1]):
 plt.figure(figsize=(16, 3))
 ax = plt.axes()
 plt.plot(t2,Ype)
-plt.legend(['OLS','LASSO','Ridge','GP-NARX'], loc='lower right')
+plt.legend(modelnames, loc='lower right')
 plt.title('Out-of-sample Cumulative Error')
 plt.grid(True)
 plt.show()
