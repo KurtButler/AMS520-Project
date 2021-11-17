@@ -8,7 +8,7 @@ The objective of this project is to study forecasting methodolgies for financial
 | ------------- | ------------- | ---- |
 | Data Overview  | [Data Overview - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Data%20Overview%20-%20Gas.ipynb)  | [Data Overview - Bond.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Data%20Overview%20-%20Bond.ipynb)  | 
 | Linear Models | [Linear Models - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Linear%20Models%20-%20Gas.ipynb)   | [Linear Models - Bond.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/Linear%20Models%20-%20Bond.ipynb)   |
-| NARX (Feedforward NN) |   | |
+| NARX  |  [NARX Models - Gas.ipynb](https://github.com/guangdongzoo/AMS520-Project/blob/main/Notebooks/NARX%20-%20Gas.ipynb)  | |
 | Recurrent Neural Networks |   | |
 | Comparison of models and data fusion |   | |
 
