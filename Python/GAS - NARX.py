@@ -3,10 +3,10 @@
 
 
 # Configuration
-Ntt = 300 # Test-train split
-enable_detrend = False 
+Ntt = 400 # Test-train split
+enable_detrend = True 
 enable_normalize=True
-Q = 4 # Order of ARX Model
+Q = 5 # Order of ARX Model
  
 
 
@@ -108,7 +108,7 @@ OLSmdl = np.linalg.lstsq(Z, y, rcond=None)
 Yp[:,0] = Z @ OLSmdl[0] 
 
 # Fit a LASSO model
-LASSOmdl = linear_model.Lasso(alpha=0.001)
+LASSOmdl = linear_model.Lasso(alpha=0.2)
 LASSOmdl.fit(Z, y)
 Yp[:,1] = Z @ LASSOmdl.coef_
 
@@ -142,7 +142,8 @@ Zt2 = torch.Tensor(Z2)
 class ExactGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
         super(ExactGPModel, self).__init__(train_x, train_y, likelihood)
-        self.mean_module = gpytorch.means.ConstantMean()
+        self.mean_module = gpytorch.means.LinearMean(train_x.size(1))
+        #self.mean_module = gpytorch.means.ConstantMean()
         self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
 
     def forward(self, x):
@@ -240,7 +241,7 @@ Yp[:,1] = Z2 @ LASSOmdl.coef_ # LASSO ARX
 Yp[:,2] = Z2 @ ridgemdl.coef_ # Ridge ARX
 #Yp[:,3] = gpr.predict(Z2)     # GP    NARX
 Yp[:,3] = torchmodel(Zt2).mean.detach()    # GP    NARX
-Yp[:,4] = 0*Yp[:,1]    # GP    NARX
+Yp[:,4] = Yp[:,1]    # GP    NARX
 
 
 
