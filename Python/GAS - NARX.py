@@ -3,10 +3,10 @@
 
 
 # Configuration
-Ntt = 400 # Test-train split
-enable_detrend = True 
+Ntt = 600 # Test-train split
+enable_detrend = False 
 enable_normalize=True
-Q = 5 # Order of ARX Model
+Q = 4 # Order of ARX Model
  
 
 
@@ -108,12 +108,12 @@ OLSmdl = np.linalg.lstsq(Z, y, rcond=None)
 Yp[:,0] = Z @ OLSmdl[0] 
 
 # Fit a LASSO model
-LASSOmdl = linear_model.Lasso(alpha=0.2)
+LASSOmdl = linear_model.Lasso(alpha=0.0001,fit_intercept=False)
 LASSOmdl.fit(Z, y)
 Yp[:,1] = Z @ LASSOmdl.coef_
 
 # Fit a LASSO model
-ridgemdl = linear_model.Ridge(alpha=0.5)
+ridgemdl = linear_model.Ridge(alpha=0.1,fit_intercept=False)
 ridgemdl.fit(Z, y)
 Yp[:,2] = Z @ ridgemdl.coef_
 
@@ -166,7 +166,7 @@ optimizer = torch.optim.Adam(torchmodel.parameters(), lr=0.1)  # Includes Gaussi
 # "Loss" for GPs - the marginal log likelihood
 mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, torchmodel)
 
-training_iter = 50
+training_iter = 75
 for i in range(training_iter):
     # Zero gradients from previous iteration
     optimizer.zero_grad()
