@@ -40,8 +40,8 @@ N = X.shape[0]
 
 # Parameters
 W = D + 100 # Window size
-eta = 0.999  # Learning rate for LASSO sub-ensemble weights
-I = 100     # No. of LASSO estimators
+eta = 0.5  # Learning rate for LASSO sub-ensemble weights
+I = 10     # No. of LASSO estimators
 biasEnable=False # Set intercept in LASSO linear model
 
 # Init window
@@ -58,7 +58,7 @@ cost = np.zeros((I))
 
 
 # Rolling windows
-for n in range(27+W,N-W-26):
+for n in range(27+W,N-W):
     XX = X[n:int(n+W),:]
     yy = y[n:int(n+W)]
     
@@ -66,7 +66,7 @@ for n in range(27+W,N-W-26):
     for i in range(0,I):
         LASSOmdl = linear_model.Lasso(alpha=g[i],max_iter=3000, fit_intercept=biasEnable)
         LASSOmdl.fit(XX, yy)
-        yp[n,i] = X[int(n+W),:] @ LASSOmdl.coef_
+        yp[n+W,i] = X[int(n+W),:] @ LASSOmdl.coef_
         
     # Weight update
     for i in range(0,I):
@@ -77,7 +77,7 @@ for n in range(27+W,N-W-26):
     w = wu / np.sum(wu)
     
     # Forecast
-    ypp[n] = yp[n,:] @ w
+    ypp[n+W] = yp[n+W,:] @ w
 
 plt.figure(figsize=(16, 2))
 t = np.transpose(np.arange(0,y.shape[0]))
