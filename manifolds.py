@@ -1,5 +1,5 @@
 import numpy as np
-
+# Functions for doing analysis and causal inference in dynamical systems
 
 def embed(x, Q, tau):
     """
