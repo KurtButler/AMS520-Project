@@ -28,45 +28,51 @@ Xnames = ["STOCKS","JFKTEMP","CLTTEMP","ORDTEMP","HOUTEMP","LAXTEMP","NXT_CNG_ST
 # Decompose our guy into trend, seasonal and residuals
 Xd = sm.tsa.seasonal_decompose(X,model='additive',freq=52)
 
-
-# For now, my signals will not be AR
-X = np.array(Xd.seasonal[:,0:6])
-y = Xd.seasonal[:,6]
-#X = np.array(Xd.resid[:,0:6])
-#y = Xd.resid[:,6]
-
-D = X.shape[1]
-N = X.shape[0]
-
 # Parameters
-W = D + 100 # Window size
-eta = 0.5  # Learning rate for LASSO sub-ensemble weights
+W =106 # Window size
+eta = 0.9  # Learning rate for LASSO sub-ensemble weights
 I = 10     # No. of LASSO estimators
 biasEnable=False # Set intercept in LASSO linear model
 
-ypp = lassobox(X,y,W,I,biasEnable,eta)
+plt.figure(figsize=(16, 6))
 
-plt.figure(figsize=(16, 2))
+# Seasonal
+plt.subplot(3,1,1)
+X = np.array(Xd.seasonal[:,0:6])
+y = Xd.seasonal[:,6]
+ypp = lassobox(X,y,W,I,biasEnable,eta)
 t = np.transpose(np.arange(0,y.shape[0]))
 tpp = np.transpose(np.arange(0,ypp.shape[0]))
 plt.plot(t,y,tpp,ypp)
 plt.title('LASSO sub-ensemble')
-plt.legend(['Observed','LASSO ensemble'], loc='lower right')
-plt.show()
-
-
-# Plot model fit
-t = np.transpose(np.arange(0,Xd.trend.shape[0]))
-plt.figure(figsize=(16, 6))
-plt.subplot(3,1,1)
-plt.plot(t,Xd.seasonal)
-plt.legend(names, loc='lower right')
 plt.ylabel('Seasonal',FontSize=14)
-plt.subplot(3,1,2)
-plt.plot(t,Xd.trend)
-plt.ylabel('Trend',FontSize=14)
+plt.legend(['Observed','LASSO ensemble'], loc='lower right')
+
+
+# Residual
 plt.subplot(3,1,3)
-plt.plot(t,Xd.resid)
+X = np.array(Xd.resid[:,0:6])
+y = Xd.resid[:,6]
+ypp = lassobox(X,y,W,I,biasEnable,eta)
+t = np.transpose(np.arange(0,y.shape[0]))
+tpp = np.transpose(np.arange(0,ypp.shape[0]))
+plt.plot(t,y,tpp,ypp)
 plt.ylabel('Residual',FontSize=14)
-plt.grid(True)
+plt.legend(['Observed','LASSO ensemble'], loc='lower right')
+
+
+# Trend
+plt.subplot(3,1,2)
+X = np.array(Xd.trend[:,0:6])
+y = Xd.trend[:,6]
+ypp = lassobox(X,y,W,I,biasEnable,eta)
+t = np.transpose(np.arange(0,y.shape[0]))
+tpp = np.transpose(np.arange(0,ypp.shape[0]))
+plt.plot(t,y,tpp,ypp)
+plt.ylabel('Trend',FontSize=14)
+plt.legend(['Observed','LASSO ensemble'], loc='lower right')
+
+
+
 plt.show()
+

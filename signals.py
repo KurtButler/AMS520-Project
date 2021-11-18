@@ -48,10 +48,12 @@ def lassobox(X,y,W,I,biasEnable,eta):
     for n in range(27+W,N-W):
         XX = X[n:int(n+W),:]
         yy = y[n:int(n+W)]
+        if np.isnan(X[n+W,:]).any() or np.isnan(y[n+W]):
+            break
         
         # LASSO predictors
         for i in range(0,I):
-            LASSOmdl = linear_model.Lasso(alpha=g[i],max_iter=3000, fit_intercept=biasEnable)
+            LASSOmdl = linear_model.Lasso(alpha=g[i],max_iter=1000, fit_intercept=biasEnable)
             LASSOmdl.fit(XX, yy)
             yp[n+W,i] = X[int(n+W),:] @ LASSOmdl.coef_
             
