@@ -52,7 +52,7 @@ g = np.exp(np.linspace( np.log(1e-8),np.log(gmax),I))
 w = np.ones(g.shape)/I
 mdlcoeff = np.zeros((D,I))
 yp = np.zeros((y.shape[0],I))
-ypp = np.zeros((y.shape[0]))
+ypp = np.zeros((y.shape[0]))*np.nan
 wu = np.zeros((I))
 cost = np.zeros((I))
 
