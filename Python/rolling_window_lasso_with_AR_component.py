@@ -56,7 +56,7 @@ Yp = 0*np.empty((y.shape[0],NoModels))
 
 # <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
 
-# Decompose our guy into trend, seasonal and residuals
+# Decompose our guys into trend, seasonal and residuals
 Zd = sm.tsa.seasonal_decompose(Z,model='additive',freq=52)
 yd = sm.tsa.seasonal_decompose(y,model='additive',freq=52)
 
