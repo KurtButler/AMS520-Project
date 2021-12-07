@@ -76,6 +76,10 @@ for n in range(27+W,N-W):
         wu[i] = w[i]*(1 - eta*cost[i]) 
     w = wu / np.sum(wu)
     
+    # Lambda update
+    gmax = np.nanmax(yy @ XX)
+    g = np.exp(np.linspace( np.log(1e-8),np.log(gmax),I))
+        
     # Forecast
     ypp[n+W] = yp[n+W,:] @ w
 
