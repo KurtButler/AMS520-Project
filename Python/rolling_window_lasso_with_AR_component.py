@@ -12,6 +12,10 @@ sys.path.insert(0, '..')
 from manifolds import embed
 from signals import maimpute, lassobox
 
+# Ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+
 # Configuration
 Ntt = 200 # Test-train split
 enable_detrend = False 
