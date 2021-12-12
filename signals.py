@@ -76,7 +76,7 @@ def lassobox(X,y,W,I,biasEnable,eta):
     return ypp
     
 
-def mwubox(X,y,W,I,biasEnable,eta):
+def mwubox(X,y,W,I,biasEnable,eta,despike):
     """
     Wrapper script for the rolling-window LASSO sub-ensemble predictor with multiplicative weight updates
 
@@ -116,7 +116,10 @@ def mwubox(X,y,W,I,biasEnable,eta):
         # LASSO predictors
         for i in range(0,I):
             LASSOmdl = linear_model.Lasso(alpha=g[i],max_iter=1000, fit_intercept=biasEnable)
+            #try:
             LASSOmdl.fit(XX, yy)
+            #except:
+            #    print("An exception occured")
             yp[n+W,i] = X[int(n+W),:] @ LASSOmdl.coef_
         
         # Bootstrap estimator of variance 
@@ -147,5 +150,10 @@ def mwubox(X,y,W,I,biasEnable,eta):
         
         # Forecast
         ypp[n+W] = yp[n+W,:] @ w
+        
+        # Correct forecast if necessary 
+        if np.abs( ypp[n+W] - np.mean(ypp[n:int(n+W)])) > despike*np.std(ypp[n:int(n+W)]):
+            ypp[n+W] = ypp[n+W-1]
+        
         
     return ypp
